@@ -1,15 +1,58 @@
 <div class="nav">
 <a class="button">Browse</a>
 <a class="button">Search</a>
-<a class="button login-button">Log in</a>
+<br/>
+<a class="login-button">Log in</a> or 
+<a class="register-button">Sign up</a>
 </div>
 
-<div class="section ui-widget-content">
+<div class="section">
 <h2 class="section-title">Upcoming events</h2>
   Content goes here
 </div>
 
 <div id="login-dialog" title="Log in">
-  Username: (add username box here)<br/>
-  Password: (add password box here)
+<%= form_for(@user_session) do |f| %>
+  <% if @user_session.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_session.errors.count, "error") %> prohibited this user_session from being saved:</h2>
+
+      <ul>
+      <% @user_session.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Log in" %>
+  </div>
+<% end %>
+</div>
+
+<div id="register-dialog" title="Sign up">
+  <%= form_for(@user) do |f| %>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+    <br/>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+    <br/>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+    <br/>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+    <br/>
+    <%= f.submit "Register" %>
+  <% end %>
 </div>

@@ -19,10 +19,21 @@ body {
   margin: 0px;
   font-family: sans-serif;
   background-color: #fbf9f9;
+  color: #4c3f1f;
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:hover {
+  background-color: transparent;
+  cursor: pointer;
 }
 
 h1, h2, h3 {
   font-family: 'Rosario', sans-serif;
+  font-weight: bold;
 }
 
 h1#title {
@@ -33,7 +44,7 @@ h1#title {
   margin: 0px;
   margin-bottom: 0.5em;
   text-align: center;
-  text-transform: uppercase;
+  font-variant: small-caps;
   letter-spacing: 0.2em;
   font-weight: bold;
   font-size: 3em;
@@ -61,6 +72,7 @@ div#main {
   margin-right: 1em;
   padding: 2em;
   padding-top: 0px;
+  color: #4c3f1f;
 }
 
 /* For nav buttons */
@@ -71,6 +83,8 @@ div#main {
 div.section {
   margin: 1em;
   padding: 1em;
+  border: 1px solid #eee;
+  background-color: #fff;
 }
 
 h2.section-title {
