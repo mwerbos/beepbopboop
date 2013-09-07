@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130907201013) do
+ActiveRecord::Schema.define(:version => 20130907203155) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -33,10 +33,22 @@ ActiveRecord::Schema.define(:version => 20130907201013) do
     t.integer  "event_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.text     "times"
   end
 
   add_index "preferences", ["activity_id"], :name => "index_preferences_on_activity_id"
   add_index "preferences", ["event_id"], :name => "index_preferences_on_event_id"
   add_index "preferences", ["user_id"], :name => "index_preferences_on_user_id"
+
+  create_table "user_sessions", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "username"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end
