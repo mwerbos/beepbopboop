@@ -19,7 +19,13 @@ $(document).ready(prepare)
 function prepare() {
   $('.button').button();
   $('#login-dialog').dialog({ autoOpen: false, modal: true});
+  $('#register-dialog').dialog({ autoOpen: false, modal: true});
   $('.login-button').click(function() {
     $('#login-dialog').dialog('open');
+    $('.button').button();
+  });
+  $('.register-button').click(function() {
+    $('#register-dialog').dialog('open');
+    $('.button').button();
   });
 }
