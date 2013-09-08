@@ -92,62 +92,73 @@ def choose_optimal(thisActivity)
 	
 	prefs = Preference.where(activity_id: thisActivity)
 	
-	allRanges = prefs.map { |pref| pref.times }
-	
-	relevantTimes = []
-	
-	# puts "\nNumber of ranges:" + String(allRanges.size)
+	while true
 		
-	allRanges.flatten.each {
-		|range|
-		relevantTimes.push(range[:start]).push(range[:end])
-	}
-	
-	relevantTimes = relevantTimes.sort
-	# puts relevantTimes
-	
-	timeRanges = {}
-	
-	if relevantTimes.size > 0
-		(relevantTimes.size-1).times {
-			|i|
-			if relevantTimes[i] != relevantTimes[i+1]
-				timeRanges[{start:relevantTimes[i], end:relevantTimes[i+1]}] = 0
+		allRanges = prefs.map { |pref| pref.times }
+		
+		relevantTimes = []
+		
+		# puts "\nNumber of ranges:" + String(allRanges.size)
+			
+		allRanges.flatten.each {
+			|range|
+			relevantTimes.push(range[:start]).push(range[:end])
+		}
+		
+		relevantTimes = relevantTimes.sort
+		# puts relevantTimes
+		
+		timeRanges = {}
+		
+		if relevantTimes.size > 0
+			(relevantTimes.size-1).times {
+				|i|
+				if relevantTimes[i] != relevantTimes[i+1]
+					timeRanges[{start:relevantTimes[i], end:relevantTimes[i+1]}] = 0
+				end
+			}
+			
+			timeRanges.keys.each {
+				|timeRange|
+				middleTime = range_middle(timeRange)
+				utility = is_within(middleTime, prefs)
+				timeRanges[timeRange] = utility*range_span(timeRange)
+			}
+			
+			# puts timeRanges
+			
+			bestValue = timeRanges.values.max
+			
+			if bestValue == 0
+				break
 			end
-		}
-		
-		timeRanges.keys.each {
-			|timeRange|
-			middleTime = range_middle(timeRange)
-			utility = is_within(middleTime, prefs)
-			timeRanges[timeRange] = utility*range_span(timeRange)
-		}
-		
-		# puts timeRanges
-		
-		bestRange = timeRanges.key(timeRanges.values.max)
-		
-		puts "BEST RANGE: " + String(bestRange)
-		
-		ids = get_within(range_middle(bestRange), prefs)
+			
+			bestRange = timeRanges.key(bestValue)
+			
+			puts "BEST RANGE: " + String(bestRange)
+			
+			ids = get_within(range_middle(bestRange), prefs)
+					
+			ids.each {
+				|id|
+				p = prefs.select{|pref| pref.id == id}[0]
+				p.repeats -= 1
+			}
+			
+			prefs.each {
+				|pref|
 				
-		ids.each {
-			|id|
-			p = prefs.select{|pref| pref.id == id}[0]
-			p.repeats -= 1
-		}
-		
-		prefs.each {
-			|pref|
-			
-			if pref.repeats <= 0
-				pref.interest = 0
-			end
-			
-			puts pref.id
-			puts "\t" + String(pref.repeats)
-			puts "\t" + String(pref.interest)
-		}
+				if pref.repeats <= 0
+					pref.interest = 0
+				end
+				
+				puts pref.id
+				puts "\t" + String(pref.repeats)
+				puts "\t" + String(pref.interest)
+			}
+		else
+			break
+		end
 	end
 	
 	return nil
