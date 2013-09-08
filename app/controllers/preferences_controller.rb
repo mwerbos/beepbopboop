@@ -25,7 +25,7 @@ class PreferencesController < ApplicationController
         puts t.inspect
         puts "----------------------------"
         t = t - 1.days
-        @activity.delay(run_at: t).check_and_create_event
+        @activity.delay(run_at: t).check_and_create_event(@preference)
         format.html { redirect_to "/", :notice => 'Preference was successfully created.' }
         format.json { render :json => @preference, :status => :created, :location => @preference }
       else

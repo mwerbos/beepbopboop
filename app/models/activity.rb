@@ -170,19 +170,9 @@ end
     return bestRanges
   end
 
-  def check_and_create_event
+  def check_and_create_event(pref)
     # Find the preference with the closest time range.
-    prefs = Preference.where(activity_id: self)
-    min_pref = prefs.first
-    min_time = prefs.first.times.first[:start]
-    prefs.each do |pref|
-      pref.times.each do |time|
-        if(time[:start] < min_time)
-          min_time = time[:start]
-          min_pref = pref
-        end
-      end
-    end
+    min_time = pref.times.first[:start]
     puts "========================================"
     puts "This activity is:"
     puts self.inspect
@@ -222,6 +212,8 @@ end
       @event.end_time = end_time
       # TODO notify users
       # TODO render these preferences invalid or whatever?
+      prefs = Preference.where(activity_id: self)
+      @event.users = []
       prefs.each do |pref|
         pref.event = @event
         @event.users.push(pref.user)
