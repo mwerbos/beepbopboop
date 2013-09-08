@@ -18,16 +18,17 @@ class PreferencesController < ApplicationController
     puts @preference.inspect
     puts "*****************************"
     respond_to do |format|
+      # TODO: make preferences with blank activities not save
       if (@activity and @preference.save)
-        # Find the first time in which the activity is being done
-        t = @preference.earliestTime 
-        puts "----------------------------"
-        puts t.inspect
-        puts "----------------------------"
-        t = t - 1.days
-        @activity.delay(run_at: t).check_and_create_event(@preference)
-        format.html { redirect_to "/", :notice => 'Preference was successfully created.' }
-        format.json { render :json => @preference, :status => :created, :location => @preference }
+          # Find the first time in which the activity is being done
+          t = @preference.earliestTime 
+          puts "----------------------------"
+          puts t.inspect
+          puts "----------------------------"
+          t = t - 1.days
+          @activity.delay(run_at: t).check_and_create_event(@preference)
+          format.html { redirect_to "/", :notice => 'Preference was successfully created.' }
+          format.json { render :json => @preference, :status => :created, :location => @preference }
       else
         format.html { redirect_to "/", :notice => 'Could not create preference.' }
         format.json { render :json => @preference.errors, :status => :unprocessable_entity }
