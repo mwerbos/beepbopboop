@@ -55,7 +55,8 @@ def is_within(time,length, prefs,activity)
 			pref.times.each{
 				|range|
 				if range[:start] < time and range[:end] > time
-          value += pref.interest*[pref.max_time,range[:end]-range[:start]].min
+					puts length
+          value += pref.interest*[pref.max_time,86400*length].min
           n+=1
 				end
 			}
@@ -128,6 +129,9 @@ end
           |timeRange|
           middleTime = range_middle(timeRange)
           utility = is_within(middleTime,range_span(timeRange), prefs,self)
+		  puts "********************************"
+		  puts "#{timeRange}: #{utility}"
+		  puts "********************************"
           timeRanges[timeRange] = utility
         }
         
