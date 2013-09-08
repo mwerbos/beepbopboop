@@ -17,9 +17,15 @@ class PreferencesController < ApplicationController
     puts "*****************************"
     puts @preference.inspect
     puts "*****************************"
-      respond_to do |format|
+    respond_to do |format|
       if (@activity and @preference.save)
-        @preference.delay.optimize
+        # Find the first time in which the activity is being done
+        t = @activity.earliestTime 
+        puts "----------------------------"
+        puts t.inspect
+        puts "----------------------------"
+        t = t - 1.days
+        @preference.delay(run_at: t).optimize
         format.html { redirect_to "/", :notice => 'Preference was successfully created.' }
         format.json { render :json => @preference, :status => :created, :location => @preference }
       else
