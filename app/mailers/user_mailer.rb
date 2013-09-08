@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "rocurley@umd.edu"
+  default from: "what9000server@gmail.com"
   def event_email(user,event)
     @user=user
     @event=event
