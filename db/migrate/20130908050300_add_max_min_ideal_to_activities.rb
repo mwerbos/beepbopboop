@@ -1,4 +1,4 @@
-class AddMaxMinIdealToUsers < ActiveRecord::Migration
+class AddMaxMinIdealToActivities < ActiveRecord::Migration
   def change
     add_column :activities, :max, :integer
     add_column :activities, :min, :integer
