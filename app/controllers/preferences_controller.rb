@@ -7,9 +7,13 @@ class PreferencesController < ApplicationController
     end
     @preference = Preference.new(user: current_user,times: times)
     @activity = Activity.where(:name => params[:preference][:activity]).first
-    if(@activity)
-      @preference.activity = @activity
+    if(!@activity)
+      @activity = Activity.new
+      @activity.name = params[:preference][:activity]
+      # TODO make this part of a transaction
+      @activity.save
     end
+    @preference.activity = @activity
     puts "*****************************"
     puts @preference.inspect
     puts "*****************************"
