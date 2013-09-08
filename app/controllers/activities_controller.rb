@@ -1,4 +1,5 @@
 class ActivitiesController < ApplicationController
+  before_filter :setup_new_user_and_session
   def show
     @activity = Activity.find(params[:id])
     respond_to do |format|
