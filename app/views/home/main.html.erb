@@ -62,7 +62,8 @@
   <h2 class="section-title">Upcoming events</h2>
   <% @events.each() do |e| %>
     <div class="event">
-      <%= link_to("Some people are doing "+e.activity.name, 
+      <% if e.users then c=e.users.count else c=0 end %>
+      <%= link_to(c.to_s+" people are doing "+e.activity.name, 
                   '/events/'+e.id.to_s,
                   { :class => 'button' }
                  ) %>
@@ -75,7 +76,7 @@
   <h2 class="section-title">Recently added activities</h2>
   <% @activities.each do |a| %>
     <div class="event">
-      <%= link_to("An activity called "+a.name,
+      <%= link_to(a.name,
                   '/activities/'+a.id.to_s,
                   { :class => 'button' }
                  ) %>
