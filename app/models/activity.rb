@@ -15,20 +15,7 @@ class Activity < ActiveRecord::Base
     out["times"] = self.choose_optimal
       out.to_json
   end
-
-  def earliestTime
-    prefs=self.preferences
-    puts prefs
-    times = []
-    prefs.each do |pref|
-      pref.times.each do |time|
-        times.push(time[:start])
-      end
-    end
-    puts times.inspect
-    return times.min
-  end
-  
+ 
   
   def average_size_satisfaction(min,ideal,max,n)
   width=[max-ideal,ideal-min].max.to_f
@@ -196,8 +183,51 @@ end
         end
       end
     end
+    puts "========================================"
+    puts "This activity is:"
+    puts self.inspect
+    puts "========================================"
+    puts "========================================"
+    puts "The start time of this preference is:"
+    puts min_time
+    puts "========================================"
     # Check if an optimal schedule includes it. 
+    included = false
+    start_time = nil
+    end_time = nil
+    ranges = self.choose_optimal
+    ranges.each do |range|
+      if(range[:start]==min_time)
+        included=true
+        start_time = range[:start]
+        end_time = range[:end]
+        break
+      end
+    end
+    puts "========================================"
+    puts "The optimal ranges of times are:"
+    puts ranges.inspect
+    puts "========================================"
+
+    puts "========================================"
+    puts "The start time of the optimal range that matches it is:"
+    puts start_time.inspect
+    puts "========================================"
     # If it does, schedule the event!
+    if(included)
+      puts "THE EVENT IS BEING SCHEDULED!!!!!!!!!!!!!!!!!"
+      @event = Event.new
+      @event.activity = self
+      @event.start_time = start_time
+      @event.end_time = end_time
+      @event.save
+      # TODO notify users
+      # TODO render these preferences invalid or whatever?
+      prefs.each do |pref|
+        pref.event = @event
+        pref.save
+      end
+    end
   end
 
 end
