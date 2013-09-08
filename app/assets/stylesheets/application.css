@@ -17,13 +17,13 @@
 body {
   padding: 0px;
   margin: 0px;
-  font-family: sans-serif;
+  font-family: sans-serif, 'sans serif', verdana, arial;
   background-color: #fbf9f9;
   color: #4c3f1f;
 }
 
 h1, h2, h3 {
-  font-family: 'Rosario', sans-serif;
+  font-family: 'Rosario', sans-serif, 'sans serif', verdana, arial;
   font-weight: bold;
 }
 
