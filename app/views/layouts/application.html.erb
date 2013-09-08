@@ -5,6 +5,7 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "autocomplete-rails.js" %>
+  <%= yield :head %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -23,16 +24,14 @@
 <div id="nav">
   <a class='button<%= ' ui-current' if(params[:controller] == 'home' and params[:action] == 'main')%>'
     href='/'>Home</a></label>
+  <% if current_user %>
+    <a class='button<%= ' ui-current' if(params[:controller] == 'home' and params[:action] == 'home')%>' 
+      href='/prefs'>My Preferences and Events</a></label>
+  <% end %>
   <a class='button<%= ' ui-current' if(params[:controller] == 'events' and params[:action] == 'browse')%>'
     href='/events/browse'>Browse events</a></label>
   <a class='button<%= ' ui-current' if(params[:controller] == 'activities' and params[:action] == 'browse')%>'
     href='/activities/browse'>Browse activities</a></label>
-<a class='button<%= ' ui-current' if(params[:controller] == 'home' and params[:action] == 'search')%>' 
-    href='/search'>Search</a></label>
-  <% if current_user %>
-    <a class='button<%= ' ui-current' if(params[:controller] == 'home' and params[:action] == 'home')%>' 
-      href='/prefs'>My Preferences</a></label>
-  <% end %>
 </div>
 
 <div id="main">

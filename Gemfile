@@ -6,11 +6,20 @@ gem 'rails', '3.2.8'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+
+# Delayed job for scheduling optimizations
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 
 # Autocomplete
 gem 'rails3-jquery-autocomplete'
+
+# d3 for data visualization
+gem 'd3_rails'
+
+# Gon for moving variables to js
+gem 'gon'
+gem 'rabl-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
