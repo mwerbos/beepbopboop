@@ -29,7 +29,9 @@
   <% end %>
   </h2>
   
+  <% if @event.users %>
   <% @event.users.each() do |u| %>
     <%= u.username %><br/>
   <% end %>
+<% end %>
 </div>

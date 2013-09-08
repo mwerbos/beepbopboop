@@ -220,13 +220,14 @@ end
       @event.activity = self
       @event.start_time = start_time
       @event.end_time = end_time
-      @event.save
       # TODO notify users
       # TODO render these preferences invalid or whatever?
       prefs.each do |pref|
         pref.event = @event
+        @event.users.push(pref.user)
         pref.save
       end
+      @event.save
     end
   end
 

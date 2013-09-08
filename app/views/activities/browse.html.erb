@@ -2,7 +2,7 @@
 <h2 class="section-title">All activities</h2>
 <% @activities.each() do |a| %>
   <div class="event">
-    <%= link_to("An activity called "+a.name, 
+    <%= link_to(a.name, 
                 '/activities/'+a.id.to_s,
                 { :class => 'button' }
                ) %>
