@@ -40,3 +40,60 @@
   <h2 class="section-title">Activity: <%= @activity.name %></h2>
   <div id="visualization"></div>
 </div>
+
+<% if current_user %>
+<script>
+  function redraw_ranges(){
+    $('#ranges_list').empty()
+    ranges_string=""
+    for (var i=0; i<ranges.length; i++){
+      range=ranges[i]
+      $("#ranges_list").append('<li class="time_range">FROM: '+range[0]+'<br/>TO: '+range[1]+
+      '<button type=button class="delete_button ui-state-default ui-corner-all" id=delete_'+i+'> \
+        <span class="ui-icon ui-icon-closethick"></span> </button> </li>')
+      ranges_string+=',{"start":"'+range[0]+'","end":"'+range[1]+'"}'
+    }
+    ranges_string=ranges_string.substring(1,ranges_string.length)
+    $("#preference_ranges").val("["+ranges_string+"]")
+    $(".delete_button").hover(
+        function() { $(this).addClass('ui-state-hover'); $(this).css('cursor','pointer'); },
+        function() { $(this).removeClass('ui-state-hover'); }
+        );
+  }
+  $(function(){
+    ranges=[]
+    $('#preference_start_time').datetimepicker({
+      timeFormat: "hh:mm tt"
+    });
+    $('#preference_end_time').datetimepicker({
+      timeFormat: "hh:mm tt"
+    });
+    $("#add_range").click(function(){
+      ranges.push([$('#preference_start_time').val(),$('#preference_end_time').val()])
+      redraw_ranges()
+    });
+    $(document).on("click", ".delete_button", function(){
+      i=this.id[7]
+      ranges.splice(i,1)
+      redraw_ranges()
+    });
+  });
+</script>
+  <div class=section>
+    <h2 class="section-title">I'm interested in doing this!</h2>
+    <%= form_for(:preference,{url:"/preferences/"}) do |f| %>
+      <%= f.hidden_field :activity, :value => @activity.name %><br/> <h3>When?</h3>
+       <div id="time_range_picker">
+         from <%= f.text_field :start_time %> to <%= f.text_field :end_time %>
+         <button type=button id=add_range> Add time range </button><br />
+       </div>
+       <i>I'm free during any of these times:</i>
+       <ul id="ranges_list">
+         (no times added yet)
+       </ul>
+
+      <%= f.hidden_field :ranges, value: "" %>
+      <br/><%= f.submit %>
+    <%end%>
+  </div>
+<%end%>
