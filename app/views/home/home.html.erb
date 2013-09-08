@@ -4,11 +4,11 @@
 	  <h3><%= Activity.find(p.activity_id).name %>:</h3>
 		<% p.times.each() do |t| %>
 		<% s = t[:start]; e = t[:end] %>
-	    <%= s.strftime('%b/%-e/%y: %-l:%M %p') %>
+	    <%= s.strftime('%a %b %-e %Y: %-l:%M %p') %>
 		<% if s.year == e.year && s.month == e.month && s.day == e.day %>
 		<%= e.strftime(' - %l:%M %p') %>
 		<% else %>
-		<%= e.strftime(' - %b/%-e/%y: %-l:%M %p') %>
+		<%= e.strftime(' - %a %b %-e %Y: %-l:%M %p') %>
 		<% end %>
 		<br/>
 		<% end %>
