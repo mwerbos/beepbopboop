@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :setup_new_user_and_session
   # GET /users
   # GET /users.json
   def index
