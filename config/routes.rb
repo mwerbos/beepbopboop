@@ -11,6 +11,7 @@ Velociraptor::Application.routes.draw do
   resources :users
   resources :events
   resources :activities
+  resources :preferences
 
   root :to => 'home#main'
 

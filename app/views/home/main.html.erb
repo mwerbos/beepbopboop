@@ -77,22 +77,22 @@
       range=ranges[i]
       $("#ranges_list").append('<li>Start time:'+range[0]+' End time:'+range[1]+
       '<button type=button class=delete_button id=delete_'+i+'> Delete </button> </li>')
-      ranges_string+=",["+range[0]+","+range[1]+"]"
+      ranges_string+=',{"start":"'+range[0]+'","end":"'+range[1]+'"}'
     }
     ranges_string=ranges_string.substring(1,ranges_string.length)
-    $("#activity_ranges").val("["+ranges_string+"]")
+    $("#preference_ranges").val("["+ranges_string+"]")
 
   }
   $(function(){
     ranges=[]
-    $('#activity_start_time').datetimepicker({
+    $('#preference_start_time').datetimepicker({
       timeFormat: "hh:mm tt"
     });
-    $('#activity_end_time').datetimepicker({
+    $('#preference_end_time').datetimepicker({
       timeFormat: "hh:mm tt"
     });
     $("#add_range").click(function(){
-      ranges.push([$('#activity_start_time').val(),$('#activity_end_time').val()])
+      ranges.push([$('#preference_start_time').val(),$('#preference_end_time').val()])
       redraw_ranges()
     });
     $(document).on("click", ".delete_button", function(){
@@ -107,7 +107,7 @@
 <%end%>
 <% if current_user %>
   <div class=section>
-    <%= form_for(:activity,{url:"/preferences/"}) do |f| %>
+    <%= form_for(:preference,{url:"/preferences/"}) do |f| %>
        from <%= f.text_field :start_time %> to <%= f.text_field :end_time %><br />
        <button type=button id=add_range> Add time range </button><br />
        <ul id=ranges_list>
