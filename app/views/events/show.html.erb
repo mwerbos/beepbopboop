@@ -1,1 +1,35 @@
-Event for the activity <%= @event.activity.name %>
+<% content_for :head do %>
+<%= include_gon %>
+<style type="text/css">
+  .bar {
+    fill: #cc0000;
+    opacity: 0.8;
+  }
+  .top {
+    fill: #aaaa00;
+    opacity: 0.5;
+  }
+  .axis {
+    stroke: black;
+  }
+  svg {
+    width: 100%;
+  }
+</style>
+<% end %>
+
+<div class="section">
+  <h2 class="section-title">Scheduled event for: <%= @event.activity.name %></h2>
+  <% s = @event.start_time; e = @event.end_time %>
+  <h2><%= s.strftime('%a %b %-e %Y: %-l:%M %p') %>
+  <% if s.year == e.year && s.month == e.month && s.day == e.day %>
+    <%= e.strftime(' - %l:%M %p') %>
+  <% else %>
+    <%= e.strftime(' - %a %b %-e %Y: %-l:%M %p') %>
+  <% end %>
+  </h2>
+  
+  <% @event.users.each() do |u| %>
+    <%= u.username %><br/>
+  <% end %>
+</div>
