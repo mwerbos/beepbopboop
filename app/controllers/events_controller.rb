@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_filter :setup_new_user_and_session
   def show
     @event = Event.find(params[:id])
     respond_to do |format|

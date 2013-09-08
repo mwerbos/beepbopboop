@@ -1,11 +1,8 @@
 class HomeController < ApplicationController
-  before_filter :require_user, :except => ['main']
+  before_filter :require_user, :except => ['main','search']
+  before_filter :setup_new_user_and_session, :only => ['main', 'search']
 
   def main
-    @user = User.new
-    @user_session = UserSession.new
-    # TODO make a way to show if there are more events
-    # and then go display them!
     @events = Event.find(:all, :order => "id desc", :limit => 5)
     @activities = Activity.find(:all, :order => "id desc", :limit => 5)
     respond_to do |format|
@@ -13,13 +10,13 @@ class HomeController < ApplicationController
     end
   end
 
-  def home 
+  def search
     respond_to do |format|
       format.html
     end
   end
 
-  def search
+  def home 
     respond_to do |format|
       format.html
     end

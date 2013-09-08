@@ -8884,7 +8884,7 @@ $.widget( "ui.dialog", {
 		resizable: true,
 		show: null,
 		title: null,
-		width: 500,
+		//width: 500,
 
 		// callbacks
 		beforeClose: null,
