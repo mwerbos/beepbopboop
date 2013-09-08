@@ -11,6 +11,7 @@ class PreferencesController < ApplicationController
     puts "*****************************"
       respond_to do |format|
       if @preference.save
+        @preference.delay.optimize
         format.html { redirect_to "/", :notice => 'Preference was successfully created.' }
         format.json { render :json => @preference, :status => :created, :location => @preference }
       else
