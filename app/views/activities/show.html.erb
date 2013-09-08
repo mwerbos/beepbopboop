@@ -1,5 +1,8 @@
 <% content_for :head do %>
 <%= include_gon %>
+<script type="text/javascript">
+  $(document).ready(function() { prepare(); visualize(); });
+</script>
 <style type="text/css">
   .bar {
     fill: #cc0000;

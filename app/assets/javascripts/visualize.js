@@ -110,4 +110,3 @@ function visualize() {
         .attr("transform", "translate(0," + (h) + ")")
         .call(xAxis);
 }
-$(document).ready(visualize);
