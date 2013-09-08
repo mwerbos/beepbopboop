@@ -8,7 +8,11 @@ function visualize() {
     if (window.gon.timeData == undefined)
         return;
         
+    // console.log(window.gon.timeData)
+        
     var dataset = JSON.parse(window.gon.timeData)
+    
+    // console.log(dataset)
     
     // var dataset = {
         // "users": [
@@ -21,6 +25,9 @@ function visualize() {
         // {"start":(new Date(2001,0,2)),"end":(new Date(2001, 0, 4))},
         // {"start":(new Date(2001,0,7)),"end":(new Date(2001, 0, 8))}
         // ]};
+        
+    if (dataset.users.length == 0)
+        return;
     
     border = 50
     var w = $(window).width() - 50;
@@ -43,15 +50,15 @@ function visualize() {
         });
     });
     
-    console.log(new Date(minTime))
-    console.log(new Date(maxTime))
+    // console.log(new Date(minTime))
+    // console.log(new Date(maxTime))
     
     var timesScale = d3.time.scale()
         // .domain([minDate, maxDate])
         .domain([minTime, maxTime])
         .range([border,w-border]);
         
-    console.log(timesScale(minTime))
+    // console.log(timesScale(minTime))
 
     var svg = d3.select("#visualization").append("svg")
         .attr("width", w)
