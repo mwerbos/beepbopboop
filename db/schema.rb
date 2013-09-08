@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130908102700) do
+ActiveRecord::Schema.define(:version => 20130908111122) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "max"
-    t.integer  "min"
-    t.integer  "ideal"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.integer  "max",        :default => 10000
+    t.integer  "min",        :default => 0
+    t.integer  "ideal",      :default => 10
   end
 
   create_table "delayed_jobs", :force => true do |t|

@@ -5,3 +5,17 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+file = File.open("./db/activities/activities.json", "rb")
+contents = file.read
+json = JSON.load(contents)
+
+json.keys.each {
+	|key|
+	act = Activity.create()
+	json[key].each {
+		|category, value|
+		act[category.to_sym] = value
+	}
+	act.save()
+}
