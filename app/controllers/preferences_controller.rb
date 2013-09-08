@@ -21,12 +21,15 @@ class PreferencesController < ApplicationController
       # TODO: make preferences with blank activities not save
       if (@activity and @preference.save)
           # Find the first time in which the activity is being done
-          t = @preference.earliestTime 
-          puts "----------------------------"
-          puts t.inspect
-          puts "----------------------------"
-          t = t - 1.days
-          @activity.delay(run_at: t).check_and_create_event(@preference)
+          @preference.times.each_with_index do |time,index|
+            startT = time[:start]
+            puts "----------------------------"
+            puts "Start time:", startT.inspect
+            puts "Index:", index
+            puts "----------------------------"
+            runAt = startT - 1.days
+            @activity.delay(run_at: runAt).check_and_create_event(@preference,index)
+          end
           format.html { redirect_to "/", :notice => 'Preference was successfully created.' }
           format.json { render :json => @preference, :status => :created, :location => @preference }
       else

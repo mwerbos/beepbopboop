@@ -170,9 +170,16 @@ end
     return bestRanges
   end
 
-  def check_and_create_event(pref)
+  def check_and_create_event(pref,i)
+    puts "================================="
+    puts "Index is:", i
+    puts "================================="
+    # Stop here if preference already has an event attached
+    if(pref.event)
+      return
+    end
     # Find the preference with the closest time range.
-    min_time = pref.times.first[:start]
+    min_time = pref.times[i][:start]
     puts "========================================"
     puts "This activity is:"
     puts self.inspect
