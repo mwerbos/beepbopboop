@@ -70,10 +70,10 @@ soccerTimes = [
 [5, DateTime.new(2013, 9, 12, 14, 15, 0, '-4'), DateTime.new(2013, 9, 12, 19, 10, 0, '-4')],
 [6, DateTime.new(2013, 9, 12, 13, 15, 0, '-4'), DateTime.new(2013, 9, 12, 15, 30, 0, '-4')],
 [7, DateTime.new(2013, 9, 12, 12, 15, 0, '-4'), DateTime.new(2013, 9, 12, 18, 45, 0, '-4')],
-[8, DateTime.new(2013, 9, 12, 14, 15, 0, '-4'), DateTime.new(2013, 9, 12, 18, 15, 0, '-4')],
+[8, DateTime.new(2013, 9, 12, 14, 15, 0, '-4'), DateTime.new(2013, 9, 12, 18, 0, 0, '-4')],
 [9, DateTime.new(2013, 9, 12, 13, 15, 0, '-4'), DateTime.new(2013, 9, 12, 17, 40, 0, '-4')],
 [10, DateTime.new(2013, 9, 12, 11, 15, 0, '-4'), DateTime.new(2013, 9, 12, 16, 25, 0, '-4')],
-[11, DateTime.new(2013, 9, 12, 15, 15, 0, '-4'), DateTime.new(2013, 9, 12, 19, 35, 0, '-4')],
+[11, DateTime.new(2013, 9, 12, 14, 15, 0, '-4'), DateTime.new(2013, 9, 12, 19, 35, 0, '-4')],
 [12, DateTime.new(2013, 9, 12, 14, 15, 0, '-4'), DateTime.new(2013, 9, 12, 18, 40, 0, '-4')],
 [13, DateTime.new(2013, 9, 12, 12, 15, 0, '-4'), DateTime.new(2013, 9, 12, 19, 30, 0, '-4')]
 ]
@@ -86,6 +86,27 @@ soccerTimes.each {
 	pref = Preference.create()
 	pref.user = User.find(player[0])
 	pref.activity = soccerId
+	pref.interest = 1.0
+	pref.repeats = 1
+	
+	pref.times = [{start: player[1], end: player[2]}]
+	
+	pref.save()
+}
+
+vidGameTimes = [
+[14, DateTime.new(2013, 9, 12, 12, 0, 0, '-4'), DateTime.new(2013, 9, 12, 17, 0, 0, '-4')],
+[15, DateTime.new(2013, 9, 12, 13, 0, 0, '-4'), DateTime.new(2013, 9, 12, 18, 30, 0, '-4')]
+]
+
+vidGameId = Activity.where(:name => "Video Games")[0]
+
+vidGameTimes.each {
+	|player|
+	
+	pref = Preference.create()
+	pref.user = User.find(player[0])
+	pref.activity = vidGameId
 	pref.interest = 1.0
 	pref.repeats = 1
 	
