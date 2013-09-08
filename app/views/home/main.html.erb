@@ -1,58 +1,75 @@
 <div class="section">
-<h2 class="section-title">Upcoming events</h2>
-<% @upcoming.each() do |e| %>
-  <div class="event">
-    <%= link_to("Some people are doing "+e.activity.name, 
-                '/events/'+e.id.to_s,
-                { :class => 'button' }
-               ) %>
-  </div>
-<% end %>
-<a style="float:left;clear:both;" href="browse/1">See more events...</a>
-</div>
-
-<div id="login-dialog" title="Log in">
-<%= form_for(@user_session) do |f| %>
-  <% if @user_session.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user_session.errors.count, "error") %> prohibited this user_session from being saved:</h2>
-
-      <ul>
-      <% @user_session.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+  <h2 class="section-title">Upcoming events</h2>
+  <% @events.each() do |e| %>
+    <div class="event">
+      <%= link_to("Some people are doing "+e.activity.name, 
+                  '/events/'+e.id.to_s,
+                  { :class => 'button' }
+                 ) %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
+  <a style="float:left;clear:both;" href="/events/browse/1">See more events...</a>
 </div>
 
-<div id="register-dialog" title="Sign up">
-  <%= form_for(@user) do |f| %>
-    <%= f.label :username %>
-    <%= f.text_field :username %>
-    <br/>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-    <br/>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-    <br/>
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-    <br/>
-    <%= f.submit "Register" %>
+<div class="section">
+  <h2 class="section-title">Recently added activities</h2>
+  <% @activities.each do |a| %>
+    <div class="event">
+      <%= link_to("An activity called "+a.name,
+                  '/activities/'+a.id.to_s,
+                  { :class => 'button' }
+                 ) %>
+    </div>
   <% end %>
+  <a style="float:left;clear:both;" href="/activities/browse/1">See more activities...</a>
 </div>
+
+<script>
+  function redraw_ranges(){
+    $('#ranges_list').empty()
+    ranges_string=""
+    for (var i=0; i<ranges.length; i++){
+      range=ranges[i]
+      $("#ranges_list").append('<li>Start time:'+range[0]+' End time:'+range[1]+
+      '<button type=button class=delete_button id=delete_'+i+'> Delete </button> </li>')
+      ranges_string+=',{"start":"'+range[0]+'","end":"'+range[1]+'"}'
+    }
+    ranges_string=ranges_string.substring(1,ranges_string.length)
+    $("#preference_ranges").val("["+ranges_string+"]")
+
+  }
+  $(function(){
+    ranges=[]
+    $('#preference_start_time').datetimepicker({
+      timeFormat: "hh:mm tt"
+    });
+    $('#preference_end_time').datetimepicker({
+      timeFormat: "hh:mm tt"
+    });
+    $("#add_range").click(function(){
+      ranges.push([$('#preference_start_time').val(),$('#preference_end_time').val()])
+      redraw_ranges()
+    });
+    $(document).on("click", ".delete_button", function(){
+      i=this.id[7]
+      ranges.splice(i,1)
+      redraw_ranges()
+    });
+  });
+</script>
+<% if params%>
+  <%= params %>
+<%end%>
+<% if current_user %>
+  <div class=section>
+    <%= form_for(:preference,{url:"/preferences/"}) do |f| %>
+       from <%= f.text_field :start_time %> to <%= f.text_field :end_time %><br />
+       <button type=button id=add_range> Add time range </button><br />
+       <ul id=ranges_list>
+
+       </ul>
+      <%= f.hidden_field :ranges, value: "" %>
+      <%= f.submit %>
+    <%end%>
+  </div>
+<%end%>

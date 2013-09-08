@@ -5,5 +5,5 @@ class Preference < ActiveRecord::Base
   #times should look like:
   #[{start: DATETIME, end: DATETIME},{start: ...},...]
   serialize  :times
-  # attr_accessible :title, :body
+  attr_accessible :user, :times
 end

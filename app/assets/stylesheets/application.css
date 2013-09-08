@@ -114,3 +114,7 @@ div.event {
   clear: both;
   text-align: center;
 }
+
+.login-button:hover, .register-button:hover {
+  cursor: pointer;
+}

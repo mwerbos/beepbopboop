@@ -1,0 +1,16 @@
+<div class="section">
+<h2 class="section-title">All activities</h2>
+<% @activities.each() do |a| %>
+  <div class="event">
+    <%= link_to("An activity called "+a.name, 
+                '/activities/'+a.id.to_s,
+                { :class => 'button' }
+               ) %>
+  </div>
+<% end %>
+  <div id="pager" style="width:100%;">
+    <%= will_paginate @activities %>
+  </div>
+</div>
+
+

@@ -1,28 +1,25 @@
 class HomeController < ApplicationController
-  before_filter :require_user, :except => ['main']
+  before_filter :require_user, :except => ['main','search']
+  before_filter :setup_new_user_and_session, :only => ['main', 'search']
+
   def main
-    @user = User.new
-    @user_session = UserSession.new
-    # TODO make a way to show if there are more events
-    # and then go display them!
-    @upcoming = Event.find(:all, :order => "id desc", :limit => 10)
+    @events = Event.find(:all, :order => "id desc", :limit => 5)
+    @activities = Activity.find(:all, :order => "id desc", :limit => 5)
     respond_to do |format|
       format.html
     end
   end
-  def home
+
+  def search
     respond_to do |format|
       format.html
     end
   end
-  def browse
-    # TODO: make settable?
-    events_per_page = 10
-    @page = params[:page].to_i
-    @pages = (Event.count / events_per_page).ceil.to_i
-    @events = Event.find(:all, :order => "id desc", :limit => 10)
+
+  def home 
     respond_to do |format|
       format.html
     end
   end
+
 end

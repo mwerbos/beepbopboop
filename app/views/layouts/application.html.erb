@@ -20,16 +20,23 @@
 </div>
 
 <div id="nav">
-  <a class='button<%= ' current' if(params[:controller] == 'home' and params[:action] == 'main')%>' href='browse'>Browse</a></label>
-  <a class='button<%= ' current' if(params[:controller] == 'home' and params[:action] == 'main')%>' href='search'>Search</a></label>
+  <a class='button<%= ' ui-current' if(params[:controller] == 'events' and params[:action] == 'browse')%>'
+    href='/events/browse'>Browse events</a></label>
+  <a class='button<%= ' ui-current' if(params[:controller] == 'activities' and params[:action] == 'browse')%>'
+    href='/activities/browse'>Browse activities</a></label>
+<a class='button<%= ' ui-current' if(params[:controller] == 'home' and params[:action] == 'search')%>' 
+    href='/search'>Search</a></label>
   <% if current_user %>
-    <a class='button<%= ' current' if(params[:controller] == 'home' and params[:action] == 'main')%>' href='prefs'>My Preferences</a></label>
+    <a class='button<%= ' ui-current' if(params[:controller] == 'home' and params[:action] == 'home')%>' 
+      href='/prefs'>My Preferences</a></label>
   <% end %>
 </div>
 
 <div id="main">
 <%= yield %>
 </div>
+
+<%= render :partial => '/shared/login' %>
 
 </body>
 </html>

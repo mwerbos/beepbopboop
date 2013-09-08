@@ -4,6 +4,13 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
   
   private
+
+  def setup_new_user_and_session
+    if(!current_user)
+      @user = User.new
+      @user_session = UserSession.new
+    end
+  end
   
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
