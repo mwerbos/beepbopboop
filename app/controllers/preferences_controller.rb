@@ -2,8 +2,8 @@ class PreferencesController < ApplicationController
   def create
     raw_times=JSON.parse(params[:preference][:ranges])
     times=raw_times.map do |h|
-      {start: DateTime.strptime(h["start"],"%m/%d/%Y %I:%M %P"),
-        end: DateTime.strptime(h["end"],"%m/%d/%Y %I:%M %P")}
+      {start: Time.strptime(h["start"],"%m/%d/%Y %I:%M %P"),
+        end: Time.strptime(h["end"],"%m/%d/%Y %I:%M %P")}
     end
     @preference = Preference.new(user: current_user,times: times)
     puts "*****************************"
