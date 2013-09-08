@@ -215,7 +215,6 @@ end
     puts "========================================"
     # If it does, schedule the event!
     if(included)
-      # TODO render these preferences invalid or whatever
       puts "THE EVENT IS BEING SCHEDULED!!!!!!!!!!!!!!!!!"
       @event = Event.new
       @event.activity = self
@@ -223,6 +222,11 @@ end
       @event.end_time = end_time
       @event.save
       # TODO notify users
+      # TODO render these preferences invalid or whatever?
+      prefs.each do |pref|
+        pref.event = @event
+        pref.save
+      end
     end
   end
 
