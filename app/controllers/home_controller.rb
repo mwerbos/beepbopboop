@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   before_filter :setup_new_user_and_session, :only => ['main', 'search']
 
   def main
-    @events = Event.find(:all, :order => "id desc", :limit => 5)
+    @events = Event.find(:all, :order => "start_time desc", :limit => 5)
     @activities = Activity.find(:all, :order => "id desc", :limit => 5)
     respond_to do |format|
       format.html

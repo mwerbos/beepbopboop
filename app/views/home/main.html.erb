@@ -63,7 +63,7 @@
   <% @events.each() do |e| %>
     <div class="event">
       <% if e.users then c=e.users.count else c=0 end %>
-      <%= link_to(c.to_s+" people are doing "+e.activity.name, 
+      <%= link_to(c.to_s+" people are meeting for "+e.activity.name, 
                   '/events/'+e.id.to_s,
                   { :class => 'button' }
                  ) %>
