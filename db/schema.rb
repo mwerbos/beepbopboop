@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(:version => 20130907225326) do
   end
 
   create_table "events", :force => true do |t|
-    t.integer  "activtiy_id"
+    t.integer  "activity_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "events", ["activtiy_id"], :name => "index_events_on_activtiy_id"
+  add_index "events", ["activity_id"], :name => "index_events_on_activity_id"
 
   create_table "preferences", :force => true do |t|
     t.integer  "user_id"

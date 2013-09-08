@@ -1,0 +1,19 @@
+<div class="section">
+<h2 class="section-title">All events</h2>
+<% @events.each() do |e| %>
+  <div class="event">
+    <%= link_to("Some people are doing "+e.activity.name, 
+                '/events/'+e.id.to_s,
+                { :class => 'button' }
+               ) %>
+  </div>
+<% end %>
+<div id="pager" style="width:100%;">
+<a <%= @page > 1 ? "href=${{@page-1}}" : "" %> > &lt; prev</a>
+&nbsp;&nbsp;
+<a <%= @page < @pages ? "href=#{(@page+1).to_s}" : "" %> >next &gt;</a><br/>
+(on page <%= @page.to_s %> of <%= @pages.to_s %>)
+</div>
+</div>
+
+

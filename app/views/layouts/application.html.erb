@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1 id="title" title="amirite?">velociRaptor</h1>
+  <a href='/' class="title"><h1 class="title" title="amirite?">velociRaptor</h1></a>
 <div id="user">
 <% if current_user %>
   Logged in as <%= current_user.username %>.
@@ -17,6 +17,14 @@
   <a class="login-button">Log in</a> or 
   <a class="register-button">Sign up</a>
 <% end %>
+</div>
+
+<div id="nav">
+  <a class='button<%= ' current' if(params[:controller] == 'home' and params[:action] == 'main')%>' href='browse'>Browse</a></label>
+  <a class='button<%= ' current' if(params[:controller] == 'home' and params[:action] == 'main')%>' href='search'>Search</a></label>
+  <% if current_user %>
+    <a class='button<%= ' current' if(params[:controller] == 'home' and params[:action] == 'main')%>' href='prefs'>My Preferences</a></label>
+  <% end %>
 </div>
 
 <div id="main">

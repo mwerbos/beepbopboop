@@ -1,8 +1,13 @@
 Velociraptor::Application.routes.draw do
   resources :user_sessions
   match 'logout' => 'user_sessions#destroy', :as => :logout
+  match 'browse' => 'home#main'
+  match 'browse/:page' => 'home#browse'
+  match 'search' => 'home#main'
+  match 'prefs' => 'home#main'
 
   resources :users
+  resources :events
 
   root :to => 'home#main'
 

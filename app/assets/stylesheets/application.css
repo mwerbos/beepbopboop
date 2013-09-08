@@ -22,21 +22,25 @@ body {
   color: #4c3f1f;
 }
 
+h1, h2, h3 {
+  font-family: 'Rosario', sans-serif;
+  font-weight: bold;
+}
+
 a {
   text-decoration: underline;
 }
 
 a:hover {
   background-color: transparent;
-  cursor: pointer;
+  color: #dd0000;
 }
 
-h1, h2, h3 {
-  font-family: 'Rosario', sans-serif;
-  font-weight: bold;
+a.title {
+  text-decoration: none;
 }
 
-h1#title {
+h1.title {
   width: 100%;
   color: #fff;
   background: #cc0000 url(custom-theme/images/ui-bg_hexagon_30_cc0000_12x10.png) 100% 100% repeat;
@@ -80,7 +84,7 @@ div#main {
 }
 
 /* For nav buttons */
-.nav {
+#nav {
   text-align: center;
 }
 
@@ -89,9 +93,24 @@ div.section {
   padding: 1em;
   border: 1px solid #eee;
   background-color: #fff;
+  overflow: hidden;
 }
 
 h2.section-title {
   border-bottom: 1px solid black;
   margin-top: 0px;
+}
+
+/* todo: put in page-specific css? */
+
+div.event {
+  float: left;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+#pager {
+  display: block;
+  clear: both;
+  text-align: center;
 }
