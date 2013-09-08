@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130908090949) do
+ActiveRecord::Schema.define(:version => 20130908102700) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -42,6 +42,9 @@ ActiveRecord::Schema.define(:version => 20130908090949) do
     t.integer  "activtiy_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.text     "users"
   end
 
   add_index "events", ["activtiy_id"], :name => "index_events_on_activtiy_id"
@@ -53,8 +56,8 @@ ActiveRecord::Schema.define(:version => 20130908090949) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.text     "times"
-    t.float    "interest"
-    t.integer  "repeats"
+    t.integer  "interest",    :default => 1
+    t.integer  "repeats",     :default => 1
     t.float    "max_time",    :default => 3600.0
   end
 
