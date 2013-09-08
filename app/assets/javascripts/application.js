@@ -13,7 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-
+Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+      this.length = from < 0 ? this.length + from : from;
+        return this.push.apply(this, rest);
+};
 $(document).ready(prepare)
   
 function prepare() {
