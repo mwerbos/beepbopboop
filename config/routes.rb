@@ -1,5 +1,6 @@
 Velociraptor::Application.routes.draw do
   resources :user_sessions
+  match 'logout' => 'user_sessions#destroy', :as => :logout
 
   resources :users
 
