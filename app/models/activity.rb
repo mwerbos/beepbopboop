@@ -102,9 +102,24 @@ class Activity < ActiveRecord::Base
         break
       end
     end
-    
     return nil
-    
+  end
+
+  def check_and_create_event
+    # Find the preference with the closest time range.
+    prefs = Preference.where(activity_id: self)
+    min_pref = prefs.first
+    min_time = prefs.first.times.first[:start]
+    prefs.each do |pref|
+      pref.times.each do |time|
+        if(time[:start] < min_time)
+          min_time = time[:start]
+          min_pref = pref
+        end
+      end
+    end
+    # Check if an optimal schedule includes it. 
+    # If it does, schedule the event!
   end
 
 end
