@@ -7,7 +7,7 @@ class PreferencesController < ApplicationController
     end
     @preference = Preference.new(user: current_user,times: times)
     @activity = Activity.where(:name => params[:preference][:activity]).first
-    if(!@activity)
+    if(!@activity and params[:preference][:activity] != "")
       @activity = Activity.new
       @activity.name = params[:preference][:activity]
       # TODO make this part of a transaction
