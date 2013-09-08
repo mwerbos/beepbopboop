@@ -3,6 +3,9 @@ class HomeController < ApplicationController
   def main
     @user = User.new
     @user_session = UserSession.new
+    # TODO make a way to show if there are more events
+    # and then go display them!
+    @upcoming = Event.find(:all, :order => "id desc", :limit => 10)
     respond_to do |format|
       format.html
     end
