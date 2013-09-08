@@ -19,6 +19,14 @@
 <% end %>
 </div>
 
+<div id="nav">
+  <a class='button<%= ' current' if(params[:controller] == 'home' and params[:action] == 'main')%>' href='browse'>Browse</a></label>
+  <a class='button<%= ' current' if(params[:controller] == 'home' and params[:action] == 'main')%>' href='search'>Search</a></label>
+  <% if current_user %>
+    <a class='button<%= ' current' if(params[:controller] == 'home' and params[:action] == 'main')%>' href='prefs'>My Preferences</a></label>
+  <% end %>
+</div>
+
 <div id="main">
 <%= yield %>
 </div>

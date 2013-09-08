@@ -28,4 +28,7 @@ function prepare() {
     $('#register-dialog').dialog('open');
     $('.button').button();
   });
+  $('#nav').buttonset();
+  $('.current').addClass('ui-state-active');
+  $('.current').hover(function() { $('.current').addClass('ui-state-active')});
 }
