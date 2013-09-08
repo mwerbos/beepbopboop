@@ -4,6 +4,7 @@
   <title>Velociraptor</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "autocomplete-rails.js" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -20,6 +21,8 @@
 </div>
 
 <div id="nav">
+  <a class='button<%= ' ui-current' if(params[:controller] == 'home' and params[:action] == 'main')%>'
+    href='/'>Home</a></label>
   <a class='button<%= ' ui-current' if(params[:controller] == 'events' and params[:action] == 'browse')%>'
     href='/events/browse'>Browse events</a></label>
   <a class='button<%= ' ui-current' if(params[:controller] == 'activities' and params[:action] == 'browse')%>'

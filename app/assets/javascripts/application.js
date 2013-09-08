@@ -35,4 +35,11 @@ function prepare() {
   $('#nav').buttonset();
   $('.ui-current').addClass('ui-state-active');
   $('.ui-current').hover(function() { $('.ui-current').addClass('ui-state-active')});
+  /* TODO put in page specific jaunt */
+  $('#preference_activity').css('color','#ccc');
+  $('#preference_activity').click(function() {
+    $('#preference_activity').css('color','#000');
+    $('#preference_activity').val("");
+  });
+  /* same here */
 }

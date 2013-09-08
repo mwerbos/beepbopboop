@@ -3,6 +3,7 @@ Velociraptor::Application.routes.draw do
   match 'logout' => 'user_sessions#destroy', :as => :logout
   match 'events/browse/' => 'events#browse'
   match 'events/browse/:page' => 'events#browse'
+  match 'activities_autocomplete.json?term=:term' => 'activities#search'
   match 'activities/browse/' => 'activities#browse'
   match 'activities/browse/:page' => 'activities#browse'
   match 'search' => 'home#search'
@@ -12,6 +13,8 @@ Velociraptor::Application.routes.draw do
   resources :events
   resources :activities
   resources :preferences
+
+  get 'home/autocomplete_activity_name'
 
   root :to => 'home#main'
 

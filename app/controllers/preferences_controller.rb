@@ -6,15 +6,20 @@ class PreferencesController < ApplicationController
         end: Time.strptime(h["end"],"%m/%d/%Y %I:%M %P")}
     end
     @preference = Preference.new(user: current_user,times: times)
+    @activity = Activity.where(:name => params[:preference][:activity]).first
+    if(@activity)
+      @preference.activity = @activity
+    end
     puts "*****************************"
     puts @preference.inspect
     puts "*****************************"
       respond_to do |format|
-      if @preference.save
+      if (@activity and @preference.save)
+        @preference.delay.optimize
         format.html { redirect_to "/", :notice => 'Preference was successfully created.' }
         format.json { render :json => @preference, :status => :created, :location => @preference }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to "/", :notice => 'Could not create preference.' }
         format.json { render :json => @preference.errors, :status => :unprocessable_entity }
       end
     end
