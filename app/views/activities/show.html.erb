@@ -1,20 +1,35 @@
 <% content_for :head do %>
 <%= include_gon %>
+<script type="text/javascript">
+  $(document).ready(function() { prepare(); visualize(); });
+</script>
 <style type="text/css">
-  .bar {
-    fill: #cc0000;
-    opacity: 0.8;
-  }
-  .top {
-    fill: #aaaa00;
-    opacity: 0.5;
-  }
-  .axis {
-    stroke: black;
-  }
-  svg {
-    width: 100%;
-  }
+    .bar {
+        fill: #cc0000;
+        opacity: 0.8;
+    }
+    .top {
+        fill: #aaaa00;
+        opacity: 0.5;
+    }
+    .axis {
+        stroke: black;
+    }
+    svg {
+        width: 100%;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: black;
+        shape-rendering: crispEdges;
+    }
+
+    .axis text {
+        font-family: sans-serif, verdana, arial;
+        font-size: 11px;
+    }
 </style>
 <% end %>
 
