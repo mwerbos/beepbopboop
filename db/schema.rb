@@ -11,31 +11,35 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130908034415) do
+ActiveRecord::Schema.define(:version => 20130908090949) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "max"
+    t.integer  "min"
+    t.integer  "ideal"
   end
 
   create_table "events", :force => true do |t|
-    t.integer  "activity_id"
+    t.integer  "activtiy_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "events", ["activity_id"], :name => "index_events_on_activity_id"
+  add_index "events", ["activtiy_id"], :name => "index_events_on_activtiy_id"
 
   create_table "preferences", :force => true do |t|
     t.integer  "user_id"
     t.integer  "activity_id"
     t.integer  "event_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.text     "times"
     t.float    "interest"
     t.integer  "repeats"
+    t.float    "max_time",    :default => 3600.0
   end
 
   add_index "preferences", ["activity_id"], :name => "index_preferences_on_activity_id"
@@ -66,6 +70,9 @@ ActiveRecord::Schema.define(:version => 20130908034415) do
     t.string   "last_login_ip"
     t.string   "current_login_ip"
     t.string   "email"
+    t.integer  "max"
+    t.integer  "min"
+    t.integer  "ideal"
   end
 
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
