@@ -29,6 +29,6 @@ function prepare() {
     $('.button').button();
   });
   $('#nav').buttonset();
-  $('.current').addClass('ui-state-active');
-  $('.current').hover(function() { $('.current').addClass('ui-state-active')});
+  $('.ui-current').addClass('ui-state-active');
+  $('.ui-current').hover(function() { $('.ui-current').addClass('ui-state-active')});
 }
