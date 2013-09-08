@@ -123,9 +123,11 @@ def choose_optimal(thisActivity)
 			timeRanges[timeRange] = utility*range_span(timeRange)
 		}
 		
-		puts timeRanges
+		# puts timeRanges
 		
 		bestRange = timeRanges.key(timeRanges.values.max)
+		
+		puts "BEST RANGE: " + String(bestRange)
 		
 		ids = get_within(range_middle(bestRange), prefs)
 				
