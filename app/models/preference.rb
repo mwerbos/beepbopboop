@@ -6,9 +6,13 @@ class Preference < ActiveRecord::Base
   #[{start: DATETIME, end: DATETIME},{start: ...},...]
   serialize  :times
   attr_accessible :user, :times
-  def optimize
-    puts "~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~"
-    puts "RUNNING THE EVENT OPTIMIZER, YO"
-    puts "~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~"
+
+  def earliestTime
+    times = []
+    self.times.each do |time|
+      times.push(time[:start])
+    end
+    return times.min
   end
+ 
 end
