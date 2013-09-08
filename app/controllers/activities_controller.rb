@@ -2,6 +2,7 @@ class ActivitiesController < ApplicationController
   before_filter :setup_new_user_and_session, :except => ['search']
   def show
     @activity = Activity.find(params[:id])
+	gon.timeData = @activity.generate_availability
     respond_to do |format|
       format.html
     end
