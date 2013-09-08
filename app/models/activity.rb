@@ -219,6 +219,7 @@ end
         @event.users.push(pref.user)
         pref.save
       end
+      UserMailer.event_email(@event.users,@event).deliver
       @event.save
     end
   end
