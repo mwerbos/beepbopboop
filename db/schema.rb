@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20130908102700) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "events", :force => true do |t|
-    t.integer  "activtiy_id"
+    t.integer  "activity_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.datetime "start_time"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20130908102700) do
     t.text     "users"
   end
 
-  add_index "events", ["activtiy_id"], :name => "index_events_on_activtiy_id"
+  add_index "events", ["activity_id"], :name => "index_events_on_activity_id"
 
   create_table "preferences", :force => true do |t|
     t.integer  "user_id"
@@ -89,9 +89,6 @@ ActiveRecord::Schema.define(:version => 20130908102700) do
     t.string   "last_login_ip"
     t.string   "current_login_ip"
     t.string   "email"
-    t.integer  "max"
-    t.integer  "min"
-    t.integer  "ideal"
   end
 
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
