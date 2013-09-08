@@ -12,7 +12,7 @@ class Activity < ActiveRecord::Base
     out["users"] =data.keys.map do |user|
         {id: user.id,username:user.username,times: data[user]}
       end
-    out["times"] = choose_optimal(self)
+    out["times"] = self.choose_optimal
       out.to_json
   end
 
@@ -27,6 +27,84 @@ class Activity < ActiveRecord::Base
     end
     puts times.inspect
     return times.min
+  end
+
+  def choose_optimal
+    #prefs = Preference.where(activity: self)
+    
+    prefs = Preference.where(activity_id: self)
+    
+    while true
+      
+      allRanges = prefs.map { |pref| pref.times }
+      
+      relevantTimes = []
+      
+      # puts "\nNumber of ranges:" + String(allRanges.size)
+        
+      allRanges.flatten.each {
+        |range|
+        relevantTimes.push(range[:start]).push(range[:end])
+      }
+      
+      relevantTimes = relevantTimes.sort
+      # puts relevantTimes
+      
+      timeRanges = {}
+      
+      if relevantTimes.size > 0
+        (relevantTimes.size-1).times {
+          |i|
+          if relevantTimes[i] != relevantTimes[i+1]
+            timeRanges[{start:relevantTimes[i], end:relevantTimes[i+1]}] = 0
+          end
+        }
+        
+        timeRanges.keys.each {
+          |timeRange|
+          middleTime = range_middle(timeRange)
+          utility = is_within(middleTime,range_span(timeRange), prefs,self)
+          timeRanges[timeRange] = utility
+        }
+        
+        # puts timeRanges
+        
+        bestValue = timeRanges.values.max
+        
+        if bestValue == 0
+          break
+        end
+        
+        bestRange = timeRanges.key(bestValue)
+        
+        puts "BEST RANGE: " + String(bestRange)
+        
+        ids = get_within(range_middle(bestRange), prefs)
+            
+        ids.each {
+          |id|
+          p = prefs.select{|pref| pref.id == id}[0]
+          p.repeats -= 1
+        }
+        
+        prefs.each {
+          |pref|
+          
+          if pref.repeats <= 0
+            pref.interest = 0
+          end
+          
+          puts pref.id
+          puts "\t" + String(pref.repeats)
+          puts "\t" + String(pref.interest)
+        }
+      else
+        break
+      end
+    end
+    
+    return nil
+    
   end
 
 end

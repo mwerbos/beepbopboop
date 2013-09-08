@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require autocomplete-rails
 //= require d3.v3
 //= require_tree .
 Array.prototype.remove = function(from, to) {
