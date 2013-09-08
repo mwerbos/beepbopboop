@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  autocomplete :activity, :name, :full => true
   before_filter :require_user, :except => ['main','search']
   before_filter :setup_new_user_and_session, :only => ['main', 'search']
 
