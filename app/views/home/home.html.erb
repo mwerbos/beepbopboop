@@ -1,3 +1,17 @@
 <div class="section">
   <h2 class="section-title">My activity preferences</h2>
+  <% Preference.where(user_id: current_user.id).each() do |p| %>
+	  <h3><%= Activity.find(p.activity_id).name %>:</h3>
+		<% p.times.each() do |t| %>
+		<% s = t[:start]; e = t[:end] %>
+	    <%= s.strftime('%b/%-e/%y: %-l:%M %p') %>
+		<% if s.year == e.year && s.month == e.month && s.day == e.day %>
+		<%= e.strftime(' - %l:%M %p') %>
+		<% else %>
+		<%= e.strftime(' - %b/%-e/%y: %-l:%M %p') %>
+		<% end %>
+		<br/>
+		<% end %>
+	  <br/>
+  <% end %>
 </div>
