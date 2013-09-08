@@ -10,30 +10,23 @@ function visualize() {
         
     var dataset = JSON.parse(window.gon.timeData)
     
-    border = 50
-    
     // var dataset = {
         // "users": [
-            // {"id": 1, "times": [{"start":(new Date(2001,0,1)), "end":(new Date(2001, 0, 4))}]}, 
+            // {"id": 1, "times": [{"start":(new Date(2001,0,1)), "end":(new Date(2001, 0, 4))}, {"start":(new Date(2001,0,7)), "end":(new Date(2001, 0, 10))}]}, 
             // {"id": 2, "times": [{"start":(new Date(2001,0,2)), "end":(new Date(2001, 0, 6))}]},
             // {"id": 3, "times": [{"start":(new Date(2001,0,1)), "end":(new Date(2001, 0, 8))}]},
             // {"id": 4, "times": [{"start":(new Date(2001,0,9)), "end":(new Date(2001, 0, 12))}]}
         // ],
-    // "times": [{
-        // "start":(new Date(2001,0,2)),
-        // "end":(new Date(2001, 0, 4))
-        // }]};
-        
-    // console.log(dataset)
-    // console.log(dataset.users)
-    // console.log(dataset.users[0].id)
-    // console.log(dataset.users[0].times[0])
-    // console.log(dataset.users[0].times[0].start)
-        
-    var w = 1000;
-    var h = 500;
-    var w2 = w + border*2
-    var h2 = h + border*2;
+    // "times": [
+        // {"start":(new Date(2001,0,2)),"end":(new Date(2001, 0, 4))},
+        // {"start":(new Date(2001,0,7)),"end":(new Date(2001, 0, 8))}
+        // ]};
+    
+    border = 50
+    var w = $(window).width() - 50;
+    var h = 600;
+    var w2 = w - border*2;
+    var h2 = h - border*2;
 
     var minDate = new Date();
     var maxDate = new Date(minDate.getTime() + (1000*60*60*24*7));
@@ -56,30 +49,44 @@ function visualize() {
     var timesScale = d3.time.scale()
         // .domain([minDate, maxDate])
         .domain([minTime, maxTime])
-        .range([border,w2-border]);
+        .range([border,w-border]);
         
     console.log(timesScale(minTime))
 
     var svg = d3.select("#visualization").append("svg")
-        .attr("width", w2)
-        .attr("height", h2);
+        .attr("width", w)
+        .attr("height", h);
+        
+    allSpans = []
+        
+    dataset.users.forEach(function (user, i) {
+        user.times.forEach(function (time) {
+            allSpans.push({"span": time, "row": i, "user": user.id})
+        });
+    });
     
     var rects = svg.selectAll("rect")
-        .data(dataset.users)
+        .data(allSpans)
         .enter()
         .append("rect")
         .attr("class", "bar");
 
     rects.attr("x", function(d) {
-        return timesScale(new Date(d.times[0].start));
+        return timesScale(new Date(d.span.start));
     })
     .attr("y", function(d, i) {
-        return i*(h / dataset.users.length) + (h/dataset.users.length)/4 + border;
+        return d.row*(h2 / dataset.users.length) + (h2/dataset.users.length)/4 + border;
     })
     .attr("width", function(d) {
-        return timesScale(new Date(d.times[0].end)) - timesScale(new Date(d.times[0].start))
+        return timesScale(new Date(d.span.end)) - timesScale(new Date(d.span.start))
     })
-    .attr("height", h / dataset.users.length * 1/2);
+    .attr("height", h2 / dataset.users.length * 1/2)
+    .style("fill", function(d) {
+        if (d.user == window.user)
+            return "blue"
+        else
+            return "#cc0000"
+    });
       
       
     var ranges = svg.selectAll()
@@ -97,16 +104,15 @@ function visualize() {
     .attr("width", function(d) {
         return timesScale(new Date(d.end)) - timesScale(new Date(d.start))
     })
-    .attr("height", h);
+    .attr("height", h2);
                 
     var xAxis = d3.svg.axis()
         .scale(timesScale)
         .orient("bottom")
-        .ticks(7)
         .tickSize(5);
             
     svg.append("g")
         .attr("class", "axis")
-        .attr("transform", "translate(0," + (h) + ")")
+        .attr("transform", "translate(0," + (h-border) + ")")
         .call(xAxis);
 }
