@@ -32,4 +32,7 @@ function prepare() {
     $('#register-dialog').dialog('open');
     $('.button').button();
   });
+  $('#nav').buttonset();
+  $('.ui-current').addClass('ui-state-active');
+  $('.ui-current').hover(function() { $('.ui-current').addClass('ui-state-active')});
 }

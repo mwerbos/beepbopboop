@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130907225326) do
+ActiveRecord::Schema.define(:version => 20130908034415) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(:version => 20130907225326) do
   end
 
   create_table "events", :force => true do |t|
-    t.integer  "activtiy_id"
+    t.integer  "activity_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "events", ["activtiy_id"], :name => "index_events_on_activtiy_id"
+  add_index "events", ["activity_id"], :name => "index_events_on_activity_id"
 
   create_table "preferences", :force => true do |t|
     t.integer  "user_id"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20130907225326) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.text     "times"
+    t.float    "interest"
+    t.integer  "repeats"
   end
 
   add_index "preferences", ["activity_id"], :name => "index_preferences_on_activity_id"
