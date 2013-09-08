@@ -30,9 +30,9 @@ function visualize() {
     // console.log(dataset.users[0].times[0])
     // console.log(dataset.users[0].times[0].start)
         
-    var w = 1000;
-    var h = 500;
-    var w2 = w + border*2
+    var w = $(window).width() - 50;
+    var h = 400;
+    var w2 = w + border*2;
     var h2 = h + border*2;
 
     var minDate = new Date();
