@@ -2,6 +2,7 @@
 <%= include_gon %>
 <script type="text/javascript">
   $(document).ready(function() { prepare(); visualize(); });
+  window.user = <%= current_user.id %>;
 </script>
 <style type="text/css">
     .bar {

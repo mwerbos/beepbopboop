@@ -8,22 +8,21 @@ function visualize() {
     if (window.gon.timeData == undefined)
         return;
         
-    // var dataset = JSON.parse(window.gon.timeData)
+    var dataset = JSON.parse(window.gon.timeData)
+    
+    // var dataset = {
+        // "users": [
+            // {"id": 1, "times": [{"start":(new Date(2001,0,1)), "end":(new Date(2001, 0, 4))}, {"start":(new Date(2001,0,7)), "end":(new Date(2001, 0, 10))}]}, 
+            // {"id": 2, "times": [{"start":(new Date(2001,0,2)), "end":(new Date(2001, 0, 6))}]},
+            // {"id": 3, "times": [{"start":(new Date(2001,0,1)), "end":(new Date(2001, 0, 8))}]},
+            // {"id": 4, "times": [{"start":(new Date(2001,0,9)), "end":(new Date(2001, 0, 12))}]}
+        // ],
+    // "times": [
+        // {"start":(new Date(2001,0,2)),"end":(new Date(2001, 0, 4))},
+        // {"start":(new Date(2001,0,7)),"end":(new Date(2001, 0, 8))}
+        // ]};
     
     border = 50
-    
-    var dataset = {
-        "users": [
-            {"id": 1, "times": [{"start":(new Date(2001,0,1)), "end":(new Date(2001, 0, 4))}, {"start":(new Date(2001,0,7)), "end":(new Date(2001, 0, 10))}]}, 
-            {"id": 2, "times": [{"start":(new Date(2001,0,2)), "end":(new Date(2001, 0, 6))}]},
-            {"id": 3, "times": [{"start":(new Date(2001,0,1)), "end":(new Date(2001, 0, 8))}]},
-            {"id": 4, "times": [{"start":(new Date(2001,0,9)), "end":(new Date(2001, 0, 12))}]}
-        ],
-    "times": [{
-        "start":(new Date(2001,0,2)),
-        "end":(new Date(2001, 0, 4))
-        }]};
-        
     var w = $(window).width() - 50;
     var h = 600;
     var w2 = w - border*2;
@@ -57,23 +56,37 @@ function visualize() {
     var svg = d3.select("#visualization").append("svg")
         .attr("width", w)
         .attr("height", h);
+        
+    allSpans = []
+        
+    dataset.users.forEach(function (user, i) {
+        user.times.forEach(function (time) {
+            allSpans.push({"span": time, "row": i, "user": user.id})
+        });
+    });
     
     var rects = svg.selectAll("rect")
-        .data(dataset.users)
+        .data(allSpans)
         .enter()
         .append("rect")
         .attr("class", "bar");
 
     rects.attr("x", function(d) {
-        return timesScale(new Date(d.times[0].start));
+        return timesScale(new Date(d.span.start));
     })
     .attr("y", function(d, i) {
-        return i*(h2 / dataset.users.length) + (h2/dataset.users.length)/4 + border;
+        return d.row*(h2 / dataset.users.length) + (h2/dataset.users.length)/4 + border;
     })
     .attr("width", function(d) {
-        return timesScale(new Date(d.times[0].end)) - timesScale(new Date(d.times[0].start))
+        return timesScale(new Date(d.span.end)) - timesScale(new Date(d.span.start))
     })
-    .attr("height", h2 / dataset.users.length * 1/2);
+    .attr("height", h2 / dataset.users.length * 1/2)
+    .style("fill", function(d) {
+        if (d.user == window.user)
+            return "blue"
+        else
+            return "#cc0000"
+    });
       
       
     var ranges = svg.selectAll()
